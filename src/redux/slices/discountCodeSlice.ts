@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const discountCodePattern = /^(?=(.*[A-Z]){6,})(?=.*\d{2,}).{8,20}$/;
+const discountCodePattern = /^[A-Z]{4,16}\d{2,4}$/;
 
 const discountCodeSlice = createSlice({
   name: "discountCode",

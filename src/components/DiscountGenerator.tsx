@@ -6,21 +6,29 @@ const DiscountGenerator = () => {
 
   const generateDiscountCode = () => {
     const generateCode = (): string => {
-      const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+      const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      const numbers = "0123456789";
+      const charRandMin = 4;
+      const charRandMax = 16;
+      const numRandMin = 2;
+      const numRandMax = 4;
       let code = "";
-      while (true) {
-        code = "";
-        for (let i = 0; i < 18; i++) {
-          code += characters.charAt(
-            Math.floor(Math.random() * characters.length)
-          );
-        }
-        const digits = Math.floor(10 + Math.random() * 90).toString();
-        code = code.slice(0, 18) + digits;
-        if (/^(?=(.*[A-Z]){6,})(?=.*\d{2,}).{8,20}$/.test(code)) {
-          break;
+
+      function* generator(min: number, max: number, chars: string) {
+        for (
+          let i = 0;
+          i < Math.floor(Math.random() * (max - min + 1) + min);
+          i++
+        ) {
+          yield chars.charAt(Math.floor(Math.random() * chars.length));
         }
       }
+
+      code += Array.from(generator(charRandMin, charRandMax, characters)).join(
+        ""
+      );
+      code += Array.from(generator(numRandMin, numRandMax, numbers)).join("");
+
       return code;
     };
 
